@@ -45,8 +45,25 @@
 
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+const ingoredWords = ['the', 'oh', 'a', 'an']
+const bandsList = document.querySelector('#bands')
+const mapped = bands.map((el, i) => {
+  el = el.toLocaleLowerCase()
+    .split(' ')
+    .filter((word) => !ingoredWords.some(iWord => iWord === word))
+    .join(' ')
+  return { index: i, value: el }
+}).sort((a, b) => {
+  if(a.value < b.value) return -1
+  if(a.value > b.value) return 1
+  return 0
+}).map((el) => bands[el.index])
 
+function populateList(bands, bandsList) {
+  bandsList.innerHTML = mapped.map((band) => `<li>${band}</li>`).join('')
+}
 
+populateList(mapped, bandsList)
 </script>
 
 </body>
